@@ -686,6 +686,38 @@ Bind для объекта сработает только 1 раз. Obj.bind({c
         ],
       },
       {
+        id: "deep-copy",
+        label: "Deep copy",
+        code: [{
+          lang: "js",
+          content: `function deepCopy(obj) {
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => deepCopy(item));
+  }
+
+  const copy = {};
+
+// проверяем собственные ключи принадлежащие только нашему объекту,
+// без наследованных/прототипированных свойств(вдруг на проекте кто-то добавил всем объектам какое-то свойтво)
+// Object.prototype.extra = "👻";
+
+  for (const key of Object.keys(obj)) {
+      copy[key] = deepCopy(obj[key]);
+  }
+
+  return copy;
+}
+
+Встроенная более продуманная альтернатива
+structuredClone(obj)
+`
+        }]
+      },
+      {
         id: "long-polling",
         label: "Long polling",
         description:

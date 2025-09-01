@@ -99,7 +99,6 @@ export const SUBJECTS: Record<SubjectKey, Subject> = {
         label: "Предпочитайте border-box",
         code: [
           {
-            lang: "css",
             content: `
 1. content-box (по умолчанию)
 -width и height задаются только для содержимого (content).
@@ -120,7 +119,6 @@ export const SUBJECTS: Record<SubjectKey, Subject> = {
         label: "Позиционировании",
         code: [
           {
-            lang: "ts",
             content: `
 Sticky
 -Элемент как обычный (relative), пока не доскроллим до его координаты.
@@ -151,13 +149,12 @@ Fixed
         label: "Вес специфичности селекторов",
         code: [
           {
-            lang: "css",
             content: `
 Тип селектора		      Описание селектора		    Вес (число)
 
 *			              универсальный селектор		0
 div			              тег				            1
-:first-letter		      псевдоэлемент			        1
+::first-letter		     псевдоэлемент			        1
 .class			          класс				            10
 :hover			          псевдокласс			        10
 [атрибут="значение"]	  селектор атрибута		        10

@@ -49,16 +49,22 @@ export default function Accordion({ items }: AccordionProps) {
               id={panelId}
               role="region"
               aria-labelledby={buttonId}
-              hidden={!isOpen}
-              className="pb-4 text-sm text-foreground/80"
+              className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+                isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+              }`}
             >
-              {item.image && <Image src={item.image} alt={"image"} />}
-              {item.description}
-              {item.code?.map((snip, i) => (
-                <pre key={i} className="bg-foreground/5 rounded p-3 overflow-x-auto text-sm mt-3">
-                  <code>{snip.content}</code>
-                </pre>
-              ))}
+              <div
+                className="flex flex-col gap-3 overflow-hidden pb-4 text-sm text-foreground/80 transition-opacity duration-300 ease-in-out"
+                style={{ opacity: isOpen ? 1 : 0 }}
+              >
+                {item.description}
+                {item.code?.map((snip, i) => (
+                  <pre key={i} className="bg-foreground/5 rounded p-3 overflow-x-auto text-sm">
+                    <code>{snip.content}</code>
+                  </pre>
+                ))}
+                {item.image && <Image src={item.image} alt={"image"} />}
+              </div>
             </div>
           </article>
         );

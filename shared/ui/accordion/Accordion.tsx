@@ -60,7 +60,7 @@ export default function Accordion({ items }: AccordionProps) {
                 {item.description}
                 {item.code?.map((snip, i) => (
                   <pre key={i} className="bg-foreground/5 rounded p-3 overflow-x-auto text-sm">
-                    <code>{snip.content}</code>
+                    <code>{snip.content.trim()}</code>
                   </pre>
                 ))}
                 {item.image && <Image src={item.image} alt={"image"} />}

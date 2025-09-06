@@ -1170,11 +1170,7 @@ class Person {
 
 type CP = ConstructorParameters<typeof Person>; // [string, number]
 
-14. ReturnType<T>
-
-Тип возвращаемого значения функции (уже упомянуто выше).
-
-15. Required<T> / Partial<T> / Readonly<T>
+14. Required<T> / Partial<T> / Readonly<T>
 
 Уже перечислены выше, но важно помнить их как основные трансформации типа.         
             `,

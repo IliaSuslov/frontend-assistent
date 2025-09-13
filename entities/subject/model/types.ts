@@ -17,7 +17,9 @@ export type SubjectKey =
   | "algorithms"
   | "api"
   | "security"
-  | "architecture";
+  | "architecture"
+  | "project_repository"
+  | "database";
 
 export type SubjectRule = {
   id: string;

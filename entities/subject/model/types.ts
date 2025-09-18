@@ -19,6 +19,7 @@ export type SubjectKey =
   | "security"
   | "architecture"
   | "project_repository"
+  | "testing"
   | "database";
 
 export type SubjectRule = {

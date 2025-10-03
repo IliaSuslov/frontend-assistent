@@ -23,7 +23,7 @@ export default function Accordion({ items }: AccordionProps) {
   };
 
   return (
-    <section className="w-full justify-center md:max-w-2/3 mx-auto">
+    <section>
       {items.map((item) => {
         const isOpen = item.id === openItemId;
         const buttonId = `accordion-header-${item.id}`;

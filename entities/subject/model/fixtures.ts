@@ -23,6 +23,7 @@ export const SUBJECT_ORDER: SubjectKey[] = [
   "architecture",
   "project_repository",
   "database",
+  "system_design"
 ];
 
 export const LABELS: Record<string, string> = {
@@ -46,6 +47,7 @@ export const LABELS: Record<string, string> = {
   architecture: "Architecture",
   project_repository: "Project Repository",
   database: "Database",
+  system_design: "System Design",
 };
 
 export const SUBJECTS: Record<SubjectKey, Subject> = {
@@ -2158,27 +2160,1010 @@ componentDidCatch, getDerivedStateFromError	Пока только классы (
   },
   vue: {
     key: "vue",
-    title: "Vue",
+    title: "Vue (Общее)",
     rules: [
       {
-        id: "single-file-components",
-        label: "Используйте структуру SFC",
+        id: "vue-definition",
+        label: "Что такое VueJS",
         description:
-          "Применяйте <script setup> с типизированными props и emits; стили делайте scoped при необходимости.",
+          "Прогрессивный фреймворк для создания UI. Основные принципы — реактивность, декларативные шаблоны и компонентный подход."
       },
       {
-        id: "reactivity-principles",
-        label: "Работайте в рамках реактивности",
+        id: "vue-features",
+        label: "Основные фичи Vue",
         description:
-          "ref/reactive — для состояния, computed — для производных, watch — для побочных эффектов. Не мутируйте props.",
+          "Реактивные данные, компоненты, директивы, однофайловые компоненты (SFC), маршрутизация (Vue Router), управление состоянием (Vuex/Pinia)."
       },
       {
-        id: "vue-state-management",
-        label: "Provide/Inject",
+        id: "vue-reactivity-arrays",
+        label: "Особенности массивов",
         description:
-          "provide — позволяет передавать данные вниз по дереву компонентов, без необходимости передавать их через props на каждом уровне. inject — позволяет дочернему компоненту получить эти данные, которые предоставил родитель (или любой предок). Это удобно для глобальных настроек, сервисов, состояния, которое не нужно поднимать в Vuex или Pinia.",
+          "В Vue 2 не отслеживаются замены по индексу и изменение length. В Vue 3 (Proxy) — всё отслеживается."
       },
-    ],
+      {
+        id: "vue-reactivity-objects",
+        label: "Особенности объектов",
+        description:
+          "Vue 2 не отслеживает добавление/удаление свойств. В Vue 3 Proxy делает объект полностью реактивным."
+      },
+      {
+        id: "vue-component-registration",
+        label: "Регистрация компонентов",
+        description:
+          "Глобальная регистрация — через app.component, доступна везде. Локальная — только в компоненте через свойство components."
+      },
+      {
+        id: "vue-props-types",
+        label: "Типы props",
+        description:
+          "Поддерживаются стандартные конструкторы (String, Number, Boolean, Object, Array, Function, Symbol) и кастомные через validator."
+      },
+      {
+        id: "vue-transitions",
+        label: "Переходы и анимации",
+        description:
+          "Используйте <transition> и <transition-group>, CSS transitions/animations, JS hooks или сторонние библиотеки (например, GSAP)."
+      },
+      {
+        id: "vue-sfc",
+        label: "Single File Components",
+        description:
+          "Не нарушают принцип разделения ответственности. Разделение идёт по функциональности, а не по слоям."
+      },
+      {
+        id: "vue-plugins",
+        label: "Плагины",
+        description:
+          "Создаются через объект с методом install(app). Подключаются через app.use(plugin). Удобны для глобальных сервисов."
+      },
+      {
+        id: "vue-mixins-merge",
+        label: "Стратегии слияния миксинов",
+        description:
+          "Хуки объединяются в массив, методы перезаписываются. Можно задать свои правила через app.config.optionMergeStrategies."
+      },
+      {
+        id: "vue-comparison",
+        label: "Vue vs React vs Angular",
+        description:
+          "Vue проще для входа, шаблоны декларативны. React — JSX и функциональные хуки. Angular — строгая структура и DI. Vue быстрее на старте и менее многословен."
+      },
+      {
+        id: "vue-force-update",
+        label: "Принудительное обновление",
+        description:
+          "В Vue 2 — this.$forceUpdate(). В Vue 3 обычно не требуется, Proxy обновляет автоматически."
+      },
+      {
+        id: "vue-asset-url",
+        label: "Правила трансформации asset URL",
+        description:
+          "Пути в шаблонах (например, src=\"./img.png\") во время сборки превращаются в require/import."
+      },
+      {
+        id: "vue-styles-2",
+        label: "Стилизация компонентов",
+        description:
+          "Можно совмещать глобальные и scoped стили. Для глубокой стилизации используйте ::v-deep."
+      },
+      {
+        id: "vue-hot-reload",
+        label: "Горячая перезагрузка",
+        description:
+          "По умолчанию сохраняет состояние компонентов. Работает через vue-loader или Vite. Можно отключить вручную."
+      },
+      {
+        id: "vue-custom-blocks",
+        label: "Кастомные блоки в SFC",
+        description:
+          "Можно добавлять <i18n>, <docs> и обрабатывать их с помощью loader'ов."
+      },
+      {
+        id: "vue-strict-mode",
+        label: "Strict mode",
+        description:
+          "В Vuex доступен строгий режим, но включать в продакшене не рекомендуется из-за потери производительности."
+      },
+      {
+        id: "vue-state-tree",
+        label: "Single State Tree",
+        description:
+          "Vuex хранит всё состояние в одном общем дереве, что упрощает трекинг и дебаг."
+      },
+      {
+        id: "vue-mapstate-mapgetters",
+        label: "mapState и mapGetters",
+        description:
+          "Хелперы для связывания state и computed. Getters могут быть property-style или method-style."
+      },
+      {
+        id: "vue-mutations-actions",
+        label: "Мутации и Actions",
+        description:
+          "Мутации должны быть синхронными. Actions — для асинхронной логики. Commit — изменяет state, dispatch — вызывает action."
+      },
+      {
+        id: "vue-root-parent",
+        label: "Доступ к экземплярам",
+        description:
+          "Root: this.$root, Parent: this.$parent. Обычно рекомендуется использовать props/emits вместо прямого доступа."
+      },
+      {
+        id: "vue-composition-api",
+        label: "Composition API",
+        description:
+          "Предлагает гибкую организацию кода: состояние (ref, reactive), вычисления (computed), побочные эффекты (watch). Удобнее для больших проектов, чем Options API."
+      },
+      {
+        id: "vue-nuxt-fetch",
+        label: "asyncData vs fetch (Nuxt)",
+        description:
+          "asyncData вызывается до создания компонента и наполняет данные. fetch выполняется после монтирования и может работать с реактивным состоянием."
+      },
+      {
+        id: "vue-browser-support",
+        label: "Поддержка браузеров",
+        description:
+          "Vue 3 поддерживает современные браузеры (Chrome, Firefox, Safari, Edge). IE11 не поддерживается, для старых браузеров можно использовать Vue 2 или полифиллы."
+      },
+      {
+        id: "vue-dispatch-actions",
+        label: "Dispatch во Vuex",
+        description:
+          "Actions вызываются через store.dispatch('actionName', payload). Используются для асинхронных операций или композиции нескольких мутаций."
+      },
+      {
+        id: "vue-spa",
+        label: "Одностраничные приложения (SPA)",
+        description:
+          "SPA — это приложение, которое загружается один раз и дальше динамически обновляет контент через клиентский роутинг без полной перезагрузки страницы."
+      },
+      {
+        id: "vue-ssr",
+        label: "SSR (Server-Side Rendering)",
+        description:
+          "Рендеринг на сервере позволяет генерировать HTML на бэкенде и отправлять готовую разметку. Улучшает SEO и скорость загрузки. Реализуется через Nuxt или Vue SSR."
+      },
+      {
+        id: "vue-rest-api",
+        label: "Вызов REST API",
+        description:
+          "Можно использовать fetch, axios или любой другой HTTP-клиент внутри компонентов (created/mounted) или Vuex actions."
+      },
+      {
+        id: "vue-install",
+        label: "Установка Vue",
+        description:
+          "Через CDN (script src), через npm/yarn (npm install vue), через Vue CLI или Vite для проектов с полной сборкой."
+      },
+      {
+        id: "vue-lifecycle-methods",
+        label: "Методы жизненного цикла Vue 2",
+        description:
+          "beforeCreate, created, beforeMount, mounted, beforeUpdate, updated, beforeDestroy, destroyed. Используются для управления жизнью компонента."
+      },
+      {
+        id: "vue-reactivity-nested",
+        label: "Отслеживание вложенных данных",
+        description:
+          "Vue 2 не отслеживает добавление новых свойств в объект или массив напрямую. Vue 3 (Proxy) отслеживает всё. Для Vue 2 используйте Vue.set или this.$set."
+      },
+      {
+        id: "vue-composition-api-reactivity",
+        label: "Composition API",
+        description:
+          "Реактивность строится на ref и reactive. computed для вычисляемых значений, watch/watchEffect — для побочных эффектов. Также есть provide/inject для DI."
+      },
+      {
+        id: "vue-watch",
+        label: "watch",
+        description:
+          "Наблюдатель за реактивными данными. Позволяет выполнять действия при изменении значения. Поддерживает deep и immediate опции."
+      },
+      {
+        id: "vue-watch-vs-watcheffect",
+        label: "watch vs watchEffect",
+        description:
+          "watch требует явного указания реактивного источника. watchEffect автоматически отслеживает всё, что используется внутри его функции."
+      },
+      {
+        id: "vue-lifecycle-vue3",
+        label: "Хуки жизненного цикла Vue 3",
+        description:
+          "onMounted, onUpdated, onUnmounted, onBeforeMount, onBeforeUpdate, onBeforeUnmount, onErrorCaptured, onActivated, onDeactivated. Используются вместо Options API хуков."
+      },
+      {
+        id: "vue-key-reuse",
+        label: "Переиспользование элементов с key",
+        description:
+          "Атрибут key помогает Vue правильно идентифицировать элементы в списках и не перерисовывать их заново. Используйте уникальные ключи, например id."
+      },
+      {
+        id: "vue-event-handlers",
+        label: "Обработчики событий",
+        description:
+          "Используйте v-on или сокращение @. Можно передавать методы компонента или inline-функции."
+      },
+      {
+        id: "vue-event-modifiers",
+        label: "Модификаторы событий",
+        description:
+          ".stop (остановить всплытие), .prevent (предотвратить действие), .capture, .once, .self. Упрощают работу с событиями."
+      },
+      {
+        id: "vue-key-modifiers",
+        label: "Модификаторы клавиш",
+        description:
+          "Vue поддерживает .enter, .tab, .esc, .space и другие. Можно создавать свои псевдонимы."
+      },
+      {
+        id: "vue-system-modifiers",
+        label: "Системные модификаторы",
+        description:
+          ".ctrl, .alt, .shift, .meta. Используются для комбинаций клавиш."
+      },
+      {
+        id: "vue-mouse-modifiers",
+        label: "Модификаторы мыши",
+        description:
+          ".left, .right, .middle. Определяют, какая кнопка мыши вызвала событие."
+      },
+      {
+        id: "vue-two-way-binding",
+        label: "Двусторонняя привязка",
+        description:
+          "v-model используется для связывания значения и события изменения. Работает с input, textarea, select и кастомными компонентами."
+      },
+      {
+        id: "vue-attr-binding",
+        label: "Привязка атрибутов",
+        description:
+          "v-bind или : атрибут позволяет динамически задавать атрибуты HTML (например, :src, :class, :style)."
+      },
+      {
+        id: "vue-v-model-custom",
+        label: "Кастомный v-model",
+        description:
+          "В пользовательских компонентах можно реализовать v-model через props (modelValue) и событие update:modelValue."
+      },
+      {
+        id: "vue-v-for-range",
+        label: "v-for с диапазоном",
+        description:
+          "Поддерживается запись v-for=\"n in 10\" для генерации диапазона чисел."
+      },
+      {
+        id: "vue-v-for-array-object",
+        label: "v-for для массивов и объектов",
+        description:
+          "Можно итерировать массивы (элемент, индекс) и объекты (значение, ключ, индекс). Обязательно указывайте key."
+      },
+      {
+        id: "vue-v-if-vs-v-show",
+        label: "Разница v-if и v-show",
+        description:
+          "v-if условно рендерит элемент (удаляет/создаёт в DOM). v-show управляет CSS display. v-if дороже, но не рендерит лишнее; v-show дешевле, но элемент всегда есть в DOM."
+      },
+      {
+        id: "vue-one-way-vs-two-way",
+        label: "Односторонняя vs двусторонняя привязка",
+        description:
+          "Односторонняя (v-bind) — данные только сверху вниз. Двусторонняя (v-model) — синхронизация состояния с UI."
+      },
+      {
+        id: "vue-event-handler-example",
+        label: "Пример обработчиков событий",
+        description:
+          "<button @click=\"handleClick\">Click</button>. Можно передавать параметры: @click=\"doSomething(item)\"."
+      },
+      {
+        id: "vue-component-definition",
+        label: "Определение компонента",
+        description:
+          "Компоненты Vue — переиспользуемые блоки UI. Можно создавать через объект JS (options API) или Single File Component (SFC)."
+      },
+      {
+        id: "vue-sfc-vs-object",
+        label: "SFC vs объект JS",
+        description:
+          "SFC (одиночный файл .vue) удобен для больших проектов: шаблон, логика и стили в одном месте. Объект JS подходит для простых компонентов."
+      },
+      {
+        id: "vue-props",
+        label: "Пропсы (props)",
+        description:
+          "Механизм передачи данных от родителя к дочернему компоненту. Могут быть типизированы и иметь значения по умолчанию."
+      },
+      {
+        id: "vue-props-data-flow",
+        label: "Обмен данными между компонентами",
+        description:
+          "Родитель → ребёнок: через props. Ребёнок → родитель: через события ($emit). Также можно использовать provide/inject или глобальное состояние."
+      },
+      {
+        id: "vue-slots",
+        label: "Слоты",
+        description:
+          "Позволяют вставлять разметку в дочерний компонент из родителя. Могут быть default, именованные и scoped."
+      },
+      {
+        id: "vue-slots-fallback",
+        label: "Fallback контент для слотов",
+        description:
+          "Если родитель ничего не передал в слот, используется запасной контент внутри <slot>...</slot>."
+      },
+      {
+        id: "vue-directives",
+        label: "Директивы Vue",
+        description:
+          "v-if, v-for, v-model, v-bind, v-on и кастомные директивы. Управляют DOM и поведением элементов."
+      },
+      {
+        id: "vue-directive-multiple-values",
+        label: "Передача объектов в директиву",
+        description:
+          "Можно передавать объект значений: v-bind=\"{ id: someId, disabled: isDisabled }\"."
+      },
+      {
+        id: "vue-access-parent",
+        label: "Доступ к родительскому компоненту",
+        description:
+          "Обычно используют props/events. Прямой доступ возможен через provide/inject или $parent (но это антипаттерн)."
+      },
+      {
+        id: "vue-component-creation-methods",
+        label: "Способы создания компонента",
+        description:
+          "SFC (.vue файл), Vue.component(), defineComponent() в Composition API."
+      },
+      {
+        id: "vue-directive-modifiers",
+        label: "Модификаторы директив",
+        description:
+          "Например: v-on:click.stop, v-on:submit.prevent, v-model.lazy, .number, .trim."
+      },
+      {
+        id: "vue-emit-events",
+        label: "Связь компонентов через события",
+        description:
+          "Дочерний компонент вызывает this.$emit('eventName', payload), родитель слушает через v-on/@."
+      },
+      {
+        id: "vue-register-component",
+        label: "Регистрация компонентов",
+        description:
+          "Можно регистрировать глобально (app.component) или локально в секции components:{}."
+      },
+      {
+        id: "vue-styles",
+        label: "Стили в компонентах",
+        description:
+          "Можно писать внутри <style>. По умолчанию стили глобальные. scoped добавляет уникальные data-атрибуты для изоляции."
+      },
+      {
+        id: "vue-style-inheritance",
+        label: "Наследование стилей",
+        description:
+          "Глобальные стили наследуются, scoped стили применяются только к текущему компоненту."
+      },
+      {
+        id: "vue-functional-components",
+        label: "Функциональные компоненты",
+        description:
+          "Компоненты без состояния и жизненного цикла, оптимизированные по производительности."
+      },
+      {
+        id: "vue-plugins-2",
+        label: "Плагины",
+        description:
+          "Плагины добавляют глобальные возможности. Определяются методом install(app), подключаются через app.use()."
+      },
+      {
+        id: "vue-dynamic-components",
+        label: "Динамические компоненты",
+        description:
+          "Используйте <component :is=\"currentComponent\"/> для переключения между компонентами."
+      },
+      {
+        id: "vue-global-registration",
+        label: "Глобальная регистрация",
+        description:
+          "Регистрирует компонент через app.component(). Удобно для базовых UI-элементов (кнопки, иконки)."
+      },
+      {
+        id: "vue-cyclic-dependencies",
+        label: "Циклические зависимости компонентов",
+        description:
+          "Решаются через lazy-loading, dynamic import или отложенную регистрацию."
+      },
+      {
+        id: "vue-vnode-duplication",
+        label: "Дубликаты виртуальных узлов (VNode)",
+        description:
+          "Можно создавать через render-функции или h(), но лучше избегать дублирования вручную."
+      },
+      {
+        id: "vue-data-function",
+        label: "Назначение функции data",
+        description:
+          "Функция data возвращает объект с локальным состоянием компонента. Нужна для изоляции экземпляров."
+      },
+      {
+        id: "vue-high-order-components",
+        label: "Компоненты высшего порядка",
+        description:
+          "Компоненты, которые оборачивают другие компоненты и расширяют их поведение. Используются реже, чаще применяют композицию."
+      },
+      {
+        id: "vue-component-naming",
+        label: "Именование компонентов",
+        description:
+          "CamelCase или kebab-case. Лучше использовать префиксы (BaseButton, AppHeader)."
+      },
+      {
+        id: "vue-v-if-vs-v-for-warning",
+        label: "v-if и v-for вместе",
+        description:
+          "Не используйте одновременно на одном элементе, это ухудшает читаемость и производительность. Лучше фильтровать массив заранее."
+      },
+      {
+        id: "vue-sfc-definition",
+        label: "Однофайловые компоненты (SFC)",
+        description:
+          "Файлы .vue, содержащие <template>, <script>, <style>. Удобны для разработки и поддержки."
+      },
+      {
+        id: "vue-v-cloak",
+        label: "Директива v-cloak",
+        description:
+          "Используется для скрытия незакомпилированных шаблонов до инициализации Vue. Обычно применяется с CSS [v-cloak]{display:none}."
+      },
+      {
+        id: "vue-router-definition-2",
+        label: "Что такое vue-router",
+        description:
+          "Официальный роутер для Vue.js. Поддерживает маршрутизацию SPA, вложенные маршруты, динамические параметры, lazy-loading и навигационные гарды."
+      },
+      {
+        id: "vue-router-dynamic-matching-2",
+        label: "Динамическое сопоставление маршрутов",
+        description:
+          "Используется :param в пути (например, /user/:id). Значение доступно через $route.params."
+      },
+      {
+        id: "vue-router-reactive-params-2",
+        label: "Реактивные параметры маршрута",
+        description:
+          "При изменении параметров компонент не пересоздаётся, но можно использовать watch(() => $route.params) для реакции."
+      },
+      {
+        id: "vue-router-priority-2",
+        label: "Приоритет сопоставления маршрутов",
+        description:
+          "Сначала проверяются более конкретные маршруты, потом динамические (:id), в конце catch-all (* или :pathMatch(.*))."
+      },
+      {
+        id: "vue-router-nested-2",
+        label: "Вложенные маршруты",
+        description:
+          "Позволяют отображать дочерние компоненты внутри router-view родителя. Удобны для layout’ов."
+      },
+      {
+        id: "vue-router-dynamic-routing-2",
+        label: "Dynamic routing",
+        description:
+          "Возможность добавлять маршруты во время выполнения через router.addRoute(). Полезно для приложений с авторизацией."
+      },
+      {
+        id: "vue-router-instance-2",
+        label: "Экземпляр router",
+        description:
+          "Создаётся через createRouter({ history, routes }). Используется внутри приложения через app.use(router)."
+      },
+      {
+        id: "vue-router-guards-2",
+        label: "Навигационные гарды",
+        description:
+          "beforeEach, beforeResolve, afterEach. Используются для аутентификации, логирования и контроля доступа."
+      },
+      {
+        id: "vuex-definition-2",
+        label: "Что такое Vuex",
+        description:
+          "Централизованное хранилище состояния для Vue. Обеспечивает предсказуемость и однонаправленный поток данных."
+      },
+      {
+        id: "vuex-one-way-flow-2",
+        label: "Однонаправленный поток данных",
+        description:
+          "State → View → Actions → Mutations → State. Это упрощает отладку и контроль."
+      },
+      {
+        id: "vuex-structure-principles-2",
+        label: "Структура приложения с Vuex",
+        description:
+          "state (данные), getters (вычисляемые значения), mutations (синхронные изменения), actions (асинхронные операции)."
+      },
+      {
+        id: "vuex-hot-reload-2",
+        label: "Горячая перезагрузка",
+        description:
+          "Vuex поддерживает hot reload модулей при разработке без перезагрузки страницы."
+      },
+      {
+        id: "vuex-hotupdate-api-2",
+        label: "API hotUpdate",
+        description:
+          "Позволяет обновлять state, mutations и actions динамически без пересоздания store."
+      },
+      {
+        id: "vuex-strict-mode-2",
+        label: "Strict mode",
+        description:
+          "Запрещает изменение state вне мутаций. Полезно в dev-режиме, но снижает производительность."
+      },
+      {
+        id: "vuex-plugins-2",
+        label: "Плагины Vuex",
+        description:
+          "Функции, которые подписываются на изменения состояния. Используются для логирования, сохранения в localStorage."
+      },
+      {
+        id: "vuex-plugin-mutations-2",
+        label: "Мутации в плагинах",
+        description:
+          "Можно реагировать на commit и изменять состояние внутри плагинов, но рекомендуется использовать actions."
+      },
+      {
+        id: "vuex-store-2",
+        label: "Store",
+        description:
+          "Объект-хранилище Vuex. Создаётся через createStore({ state, mutations, actions, getters })."
+      },
+      {
+        id: "vuex-vs-global-object-2",
+        label: "Vuex vs глобальный объект",
+        description:
+          "Vuex предоставляет реактивность, однонаправленный поток данных и интеграцию с Vue Devtools, в отличие от простого JS-объекта."
+      },
+      {
+        id: "vuex-install-2",
+        label: "Установка Vuex",
+        description:
+          "npm install vuex@next (для Vue 3). Подключение: const store = createStore(...); app.use(store)."
+      },
+      {
+        id: "vuex-promises-2",
+        label: "Промисы во Vuex",
+        description:
+          "Actions возвращают промисы, что позволяет выполнять цепочки async операций и использовать async/await."
+      },
+      {
+        id: "vuex-local-vs-global-2",
+        label: "Локальное состояние vs Vuex",
+        description:
+          "Vuex не заменяет локальное состояние. Используется для общих данных (auth, настройки), а локальное — для UI-состояния."
+      },
+      {
+        id: "vuex-getters-2",
+        label: "Геттеры Vuex",
+        description:
+          "Аналог computed для store. Возвращают производные данные из state."
+      },
+      {
+        id: "vuex-mutations-caveats-2",
+        label: "Подводные камни мутаций",
+        description:
+          "Мутации должны быть синхронными. Асинхронность — только в actions."
+      },
+      {
+        id: "vuex-async-actions-2",
+        label: "Асинхронные операции",
+        description:
+          "Осуществляются в actions. Они могут вызывать API, а затем commit мутаций."
+      },
+      {
+        id: "vuex-modules-2",
+        label: "Модули Vuex",
+        description:
+          "Позволяют разбивать store на независимые части (auth, cart, settings)."
+      },
+      {
+        id: "vuex-namespacing-2",
+        label: "Пространства имён Vuex",
+        description:
+          "Позволяют изолировать модули. Обращение: store.dispatch('cart/addItem')."
+      },
+      {
+        id: "vuex-modules-organization-2",
+        label: "Организация модулей",
+        description:
+          "Обычно каждый модуль в отдельном файле: state.js, mutations.js, actions.js, getters.js."
+      },
+      {
+        id: "vuex-structure-summary-2",
+        label: "Из чего состоит Vuex",
+        description:
+          "State, Mutations, Actions, Getters, Modules, Plugins. Всё это формирует предсказуемое глобальное состояние."
+      },
+      {
+        id: "vue-router-definition",
+        label: "Что такое vue-router",
+        description:
+          "Официальный роутер для Vue.js. Поддерживает маршрутизацию SPA, вложенные маршруты, динамические параметры, lazy-loading и навигационные гарды."
+      },
+      {
+        id: "vue-router-dynamic-matching",
+        label: "Динамическое сопоставление маршрутов",
+        description:
+          "Используется :param в пути (например, /user/:id). Значение доступно через $route.params."
+      },
+      {
+        id: "vue-router-reactive-params",
+        label: "Реактивные параметры маршрута",
+        description:
+          "При изменении параметров компонент не пересоздаётся, но можно использовать watch(() => $route.params) для реакции."
+      },
+      {
+        id: "vue-router-priority",
+        label: "Приоритет сопоставления маршрутов",
+        description:
+          "Сначала проверяются более конкретные маршруты, потом динамические (:id), в конце catch-all (* или :pathMatch(.*))."
+      },
+      {
+        id: "vue-router-nested",
+        label: "Вложенные маршруты",
+        description:
+          "Позволяют отображать дочерние компоненты внутри router-view родителя. Удобны для layout’ов."
+      },
+      {
+        id: "vue-router-dynamic-routing",
+        label: "Dynamic routing",
+        description:
+          "Возможность добавлять маршруты во время выполнения через router.addRoute(). Полезно для приложений с авторизацией."
+      },
+      {
+        id: "vue-router-instance",
+        label: "Экземпляр router",
+        description:
+          "Создаётся через createRouter({ history, routes }). Используется внутри приложения через app.use(router)."
+      },
+      {
+        id: "vue-router-guards",
+        label: "Навигационные гарды",
+        description:
+          "beforeEach, beforeResolve, afterEach. Используются для аутентификации, логирования и контроля доступа."
+      },
+      {
+        id: "vuex-definition",
+        label: "Что такое Vuex",
+        description:
+          "Централизованное хранилище состояния для Vue. Обеспечивает предсказуемость и однонаправленный поток данных."
+      },
+      {
+        id: "vuex-one-way-flow",
+        label: "Однонаправленный поток данных",
+        description:
+          "State → View → Actions → Mutations → State. Это упрощает отладку и контроль."
+      },
+      {
+        id: "vuex-structure-principles",
+        label: "Структура приложения с Vuex",
+        description:
+          "state (данные), getters (вычисляемые значения), mutations (синхронные изменения), actions (асинхронные операции)."
+      },
+      {
+        id: "vuex-hot-reload",
+        label: "Горячая перезагрузка",
+        description:
+          "Vuex поддерживает hot reload модулей при разработке без перезагрузки страницы."
+      },
+      {
+        id: "vuex-hotupdate-api",
+        label: "API hotUpdate",
+        description:
+          "Позволяет обновлять state, mutations и actions динамически без пересоздания store."
+      },
+      {
+        id: "vuex-strict-mode",
+        label: "Strict mode",
+        description:
+          "Запрещает изменение state вне мутаций. Полезно в dev-режиме, но снижает производительность."
+      },
+      {
+        id: "vuex-plugins",
+        label: "Плагины Vuex",
+        description:
+          "Функции, которые подписываются на изменения состояния. Используются для логирования, сохранения в localStorage."
+      },
+      {
+        id: "vuex-plugin-mutations",
+        label: "Мутации в плагинах",
+        description:
+          "Можно реагировать на commit и изменять состояние внутри плагинов, но рекомендуется использовать actions."
+      },
+      {
+        id: "vuex-store",
+        label: "Store",
+        description:
+          "Объект-хранилище Vuex. Создаётся через createStore({ state, mutations, actions, getters })."
+      },
+      {
+        id: "vuex-vs-global-object",
+        label: "Vuex vs глобальный объект",
+        description:
+          "Vuex предоставляет реактивность, однонаправленный поток данных и интеграцию с Vue Devtools, в отличие от простого JS-объекта."
+      },
+      {
+        id: "vuex-install",
+        label: "Установка Vuex",
+        description:
+          "npm install vuex@next (для Vue 3). Подключение: const store = createStore(...); app.use(store)."
+      },
+      {
+        id: "vuex-promises",
+        label: "Промисы во Vuex",
+        description:
+          "Actions возвращают промисы, что позволяет выполнять цепочки async операций и использовать async/await."
+      },
+      {
+        id: "vuex-local-vs-global",
+        label: "Локальное состояние vs Vuex",
+        description:
+          "Vuex не заменяет локальное состояние. Используется для общих данных (auth, настройки), а локальное — для UI-состояния."
+      },
+      {
+        id: "vuex-getters",
+        label: "Геттеры Vuex",
+        description:
+          "Аналог computed для store. Возвращают производные данные из state."
+      },
+      {
+        id: "vuex-mutations-caveats",
+        label: "Подводные камни мутаций",
+        description:
+          "Мутации должны быть синхронными. Асинхронность — только в actions."
+      },
+      {
+        id: "vuex-async-actions",
+        label: "Асинхронные операции",
+        description:
+          "Осуществляются в actions. Они могут вызывать API, а затем commit мутаций."
+      },
+      {
+        id: "vuex-modules",
+        label: "Модули Vuex",
+        description:
+          "Позволяют разбивать store на независимые части (auth, cart, settings)."
+      },
+      {
+        id: "vuex-namespacing",
+        label: "Пространства имён Vuex",
+        description:
+          "Позволяют изолировать модули. Обращение: store.dispatch('cart/addItem')."
+      },
+      {
+        id: "vuex-modules-organization",
+        label: "Организация модулей",
+        description:
+          "Обычно каждый модуль в отдельном файле: state.js, mutations.js, actions.js, getters.js."
+      },
+      {
+        id: "vuex-structure-summary",
+        label: "Из чего состоит Vuex",
+        description:
+          "State, Mutations, Actions, Getters, Modules, Plugins. Всё это формирует предсказуемое глобальное состояние."
+      }, {
+        id: "vue-csp",
+        label: "Vue и CSP (Content Security Policy)",
+        description:
+          "Для совместимости используйте runtime-сборку Vue (без компилятора в браузере) и указывайте nonce/hashes для inline-скриптов."
+      },
+      {
+        id: "vue-builds",
+        label: "Full vs Runtime-сборка",
+        description:
+          "Full build включает компилятор шаблонов (можно использовать template в runtime). Runtime build — меньше, работает только с предскомпилированными шаблонами (через SFC)."
+      },
+      {
+        id: "vue-webpack-setup",
+        label: "Настройка Vue.js в Webpack",
+        description:
+          "Используется vue-loader для обработки .vue файлов, vue-style-loader для стилей, babel-loader/ts-loader для JS/TS."
+      },
+      {
+        id: "vue-compiler-purpose",
+        label: "Назначение компилятора Vue",
+        description:
+          "Преобразует шаблоны во внутренние функции render(), которые работают с Virtual DOM."
+      },
+      {
+        id: "vue-devtools",
+        label: "Vue Devtools",
+        description:
+          "Расширение браузера для инспекции состояния компонентов, событий, Vuex/Pinia, performance tracking."
+      },
+      {
+        id: "vue-cdn",
+        label: "Использование CDN",
+        description:
+          "Vue можно подключать через CDN (например, unpkg, jsDelivr). Удобно для прототипирования."
+      },
+      {
+        id: "vue-loader",
+        label: "Что такое vue-loader",
+        description:
+          "Webpack loader для обработки Single File Components (.vue). Поддерживает шаблоны, скрипты и стили."
+      },
+      {
+        id: "vue-loader-setup",
+        label: "Настройка vue-loader",
+        description:
+          "Добавьте в Webpack config { test: /\.vue$/, loader: 'vue-loader' }, плюс VueLoaderPlugin."
+      },
+      {
+        id: "vue-loader-preprocessors",
+        label: "Работа с препроцессорами",
+        description:
+          "Можно использовать <style lang='scss'>, <script lang='ts'>, vue-loader автоматически подключает нужные loaders."
+      },
+      {
+        id: "scoped-css",
+        label: "Scoped CSS",
+        description:
+          "Стили применяются только к компоненту. Vue добавляет data-атрибуты для изоляции."
+      },
+      {
+        id: "scoped-css-inheritance",
+        label: "Наследование стилей при scoped",
+        description:
+          "Родительские стили не протекают в дочерние, если они scoped. Можно использовать ::v-deep для проброса."
+      },
+      {
+        id: "scoped-css-dynamic",
+        label: "Стилизация динамического контента при scoped",
+        description:
+          "Используйте ::v-deep для вложенных элементов или пробрасывайте class вручную."
+      },
+      {
+        id: "css-modules-support",
+        label: "CSS-модули",
+        description:
+          "Поддерживаются: <style module>. Классы доступны в компоненте как объект (this.$style.className)."
+      },
+      {
+        id: "runtime-build-templates",
+        label: "Runtime-сборка и шаблоны",
+        description:
+          "Runtime-build нельзя использовать с inline-template. Нужны SFC или precompile."
+      },
+      {
+        id: "css-modules-usage",
+        label: "Использование CSS-модулей",
+        description:
+          "Включите <style module>. Обращение к классам: :class='$style.myClass'."
+      },
+      {
+        id: "css-modules-preprocessors",
+        label: "CSS-модули + препроцессоры",
+        description:
+          "Работают совместно (<style module lang='scss'>)."
+      },
+      {
+        id: "css-modules-custom-injection",
+        label: "Кастомное имя инъекции для CSS-модулей",
+        description:
+          "Можно задать имя объекта через <style module='styles'>."
+      },
+      {
+        id: "hot-reload-vue-loader",
+        label: "Горячая перезагрузка в vue-loader",
+        description:
+          "vue-loader поддерживает HMR для SFC, обновляя только изменённый модуль."
+      },
+      {
+        id: "vue-loader-functional",
+        label: "Функциональные компоненты через vue-loader",
+        description:
+          "Можно задать functional в <template functional>. Такие компоненты не имеют состояния/ЖЦ."
+      },
+      {
+        id: "css-linting",
+        label: "Линтинг CSS",
+        description:
+          "Используйте stylelint для правил стиля, eslint-plugin-vue для шаблонов."
+      },
+      {
+        id: "eslint-plugin",
+        label: "Плагин ESLint",
+        description:
+          "eslint-plugin-vue добавляет правила для Vue компонентов и шаблонов."
+      },
+      {
+        id: "eslint-loader",
+        label: "eslint-loader",
+        description:
+          "Webpack loader, запускающий ESLint при сборке. Проверяет JS/TS/SFC."
+      },
+      {
+        id: "css-extraction",
+        label: "CSS extraction",
+        description:
+          "Используйте mini-css-extract-plugin (вместо vue-style-loader) для выноса CSS в отдельные файлы."
+      },
+      {
+        id: "stylelint",
+        label: "Stylelint",
+        description:
+          "Инструмент для линтинга CSS/SCSS, поддерживает плагины и автоматическую фиксацию."
+      },
+      {
+        id: "vue-testing",
+        label: "Тестирование во Vue.js",
+        description:
+          "Обычно используется Vue Test Utils (VTU) + Jest или Vitest. Можно тестировать рендер, props, события, интеграцию с Vuex/Pinia."
+      },
+      {
+        id: "vue-test-mutations",
+        label: "Тестирование мутаций Vuex",
+        description:
+          "Тестируются как чистые функции: передаём state + payload → проверяем новый state. Мутации должны быть синхронными."
+      },
+      {
+        id: "vue-test-getters",
+        label: "Тестирование геттеров Vuex",
+        description:
+          "Геттеры — это функции от state и других геттеров. Тестируются аналогично: подставляем state → проверяем результат."
+      },
+      {
+        id: "run-tests-node",
+        label: "Запуск тестов в Node",
+        description:
+          "Используются Jest или Vitest. Тесты запускаются в headless среде (jsdom)."
+      },
+      {
+        id: "run-tests-browser",
+        label: "Запуск тестов в браузере",
+        description:
+          "Через Karma, Cypress или Playwright. Подходит для e2e и интеграционных тестов."
+      },
+      {
+        id: "popular-test-frameworks",
+        label: "Фреймворки тестирования Vue",
+        description:
+          "Для unit: Jest, Vitest. Для e2e: Cypress, Playwright. Для snapshot и mocking: Testing Library (Vue Testing Library)."
+      },
+      {
+        id: "vue-performance-optimizations",
+        label: "Оптимизация Vue-приложения",
+        description:
+          "Используйте v-once для статичных элементов, v-memo и lazy-компоненты. Загружайте код по требованию (code splitting, dynamic import)."
+      },
+      {
+        id: "vue-reactivity-optimization",
+        label: "Оптимизация реактивности",
+        description:
+          "Следите за лишними re-render: используйте computed вместо watch, не храните большие данные в reactive без нужды, работайте с shallowRef/shallowReactive для оптимизации."
+      },
+      {
+        id: "vue-images-optimization",
+        label: "Оптимизация изображений",
+        description:
+          "Применяйте lazy-loading (loading='lazy'), responsive images (srcset), сжатие и CDN для статических ассетов."
+      },
+      {
+        id: "vue-accessibility",
+        label: "Доступность (A11y)",
+        description:
+          "Используйте aria-атрибуты, семантическую разметку, проверяйте доступность с Lighthouse или axe. Цвета и контраст должны соответствовать WCAG."
+      },
+      {
+        id: "vue-build-performance",
+        label: "Сборка и производительность",
+        description:
+          "Включайте tree-shaking, минимизацию и prefetch/preload. Используйте Vite или Webpack с оптимизацией кэша."
+      }
+    ]
   },
   nextjs: {
     key: "nextjs",
@@ -2203,17 +3188,41 @@ componentDidCatch, getDerivedStateFromError	Пока только классы (
     title: "Nuxt.js",
     rules: [
       {
-        id: "data-layer",
-        label: "Используйте useFetch и серверные маршруты",
+        id: "nuxt-definition",
+        label: "Что такое Nuxt",
         description:
-          "Задействуйте серверные маршруты Nuxt и useFetch для SSR-доступа к данным и кэширования.",
+          "Фреймворк поверх Vue, предоставляющий SSR, SSG и гибридный рендеринг, маршрутизацию из файловой структуры, middleware, плагины и модули."
       },
       {
-        id: "islands",
-        label: "Гидрируйте только нужное",
+        id: "nuxt-advantages",
+        label: "Преимущества Nuxt.js",
         description:
-          "Предпочитайте частичную гидратацию (islands/компоненты), избегайте лишнего client-only кода на страницах.",
+          "SEO благодаря SSR, автоматическая маршрутизация, code-splitting, экосистема модулей, гибкая конфигурация для fullstack Vue-приложений."
       },
+      {
+        id: "nuxt-render-modes",
+        label: "Режимы рендеринга",
+        description:
+          "SSR (server-side rendering), SSG (static site generation), CSR (client-side rendering). Также поддерживается Hybrid Rendering."
+      },
+      {
+        id: "nuxt-routing",
+        label: "Маршрутизация в Nuxt",
+        description:
+          "Файловая структура pages/ автоматически становится маршрутизатором. Динамические маршруты задаются через [id].vue."
+      },
+      {
+        id: "nuxt-middleware",
+        label: "Middleware",
+        description:
+          "Функции, выполняемые до рендера страницы (например, проверка авторизации). Бывают глобальные, для layout и для страницы."
+      },
+      {
+        id: "nuxt-axios-module",
+        label: "Модуль @nuxtjs/axios",
+        description:
+          "Позволяет использовать axios с преднастроенной базовой конфигурацией, интерцепторами и интеграцией в контекст Nuxt."
+      }
     ],
   },
   testing: {
@@ -4012,6 +5021,209 @@ NoSQL → гибкий JSON, легче использовать напряму�
       },
     ],
   },
+  system_design: {
+    key: "system_design",
+    title: "System Design",
+    rules: [
+      {
+        id: "sd_answer_pattern",
+        label: "Паттерн ответа на вопрос про System Design",
+        code: [{
+          content: `
+1. Базы данных
+🔹 SQL (Postgres, MySQL)
+
+Когда использовать:
+
+Данные со строгой схемой (банковские транзакции, заказы, билеты).
+Нужны транзакции (ACID).
+Нужны связи (JOIN, Foreign Keys).
+Пример: платежная система, CRM.
+
+🔹 NoSQL
+
+Key-Value (Redis, DynamoDB, Aerospike)
+Очень быстрый доступ по ключу.
+Используется для кэша, сессий, счетчиков.
+Пример: хранение токенов авторизации.
+
+Document Store (MongoDB, Couchbase)
+Когда структура данных гибкая.
+Подходит для постов, JSON-объектов, профилей.
+Пример: соцсеть (разные атрибуты у постов).
+
+Wide Column (Cassandra, HBase)
+Когда огромные объёмы данных + высокая скорость записи.
+Хорошо для логов, телеметрии, временных рядов.
+Пример: Twitter feed storage.
+
+Graph (Neo4j, ArangoDB)
+Когда важны связи между объектами (граф пользователей).
+Пример: рекомендательные системы, социальные графы.
+
+2. Кэш
+
+🔹 Redis / Memcached
+
+Когда использовать:
+Чтобы уменьшить нагрузку на БД.
+Для хранения «горячих данных» (популярные посты, профили).
+Для сессий и rate limiting.
+Redis > Memcached (Redis умеет больше: pub/sub, структуры данных).
+
+3. Очереди и стриминг
+
+🔹 Kafka
+
+Надёжный event streaming.
+Подходит для логов, событий, аналитики.
+Используется, когда система должна «пережить» сбой и обработать данные позже.
+Пример: логирование кликов на сайте, event sourcing.
+
+🔹 RabbitMQ / SQS / NATS
+
+Простая очередь сообщений.
+Подходит для фоновых задач (отправка email, push-уведомлений).
+Когда не нужна тяжёлая стриминговая система, как Kafka.
+
+4. Поиск и индексация
+
+🔹 Elasticsearch / OpenSearch
+
+Полнотекстовый поиск.
+Подходит, если нужно искать по большим данным, поддерживать фильтрацию, автокомплит.
+Пример: поиск по постам, товарам, документам.
+
+5. Хранение файлов
+
+🔹 Object Storage (Amazon S3, MinIO, Google Cloud Storage)
+
+Когда хранить большие бинарные файлы (картинки, видео, документы).
+Дёшево и масштабируемо.
+Всегда используем с CDN для быстрой раздачи.
+Пример: Instagram (фото/видео), YouTube.
+
+6. CDN (Content Delivery Network)
+
+🔹 Cloudflare, Akamai, Fastly
+
+Когда нужно доставлять статический контент (фото, видео, скрипты) с минимальной задержкой.
+Особенно важно при глобальной аудитории.
+Пример: медиа-сервисы, онлайн-магазины.
+
+7. Протоколы для общения
+
+REST → простые CRUD API.
+gRPC → high-performance, бинарные данные, микросервисы.
+WebSocket → real-time общение (чаты, онлайн-игры).
+GraphQL → когда клиенту нужны гибкие выборки данных.
+
+8. Масштабирование
+
+Load Balancer (NGINX, HAProxy, AWS ELB)
+Когда трафик нужно распределять по нескольким серверам.
+Sharding (DB split по ключу)
+Когда одна БД не справляется по размеру или нагрузке.
+Replication (master-slave, leader-follower)
+Для отказоустойчивости и чтения с реплик.
+
+🎯 Итог
+
+Когда выбираешь технологию:
+Смотри на тип данных (структурированные? бинарные? графовые?).
+Смотри на нагрузку (read-heavy / write-heavy).
+Смотри на требования к задержкам и консистентности.
+Делай trade-off (объясни, почему выбрал SQL, а не NoSQL; Redis, а не просто Postgres cache).
+  `}]
+      }, {
+        id: "example",
+        label: "Пример Вопрос-Ответ",
+        code: [{
+          content: `
+🎤 Пример вопроса
+
+Интервьюер:
+
+Представь, что ты ведёшь фронтенд в новой команде.
+Нужно спроектировать архитектуру для системы чата (аналог Slack или Telegram).
+Миллионы пользователей, real-time сообщения, вложения (файлы, фото, видео).
+Как ты построишь архитектуру? Какие технологии выберешь и почему?
+
+💡 Пример ответа (Senior уровня)
+
+1. Начинаю с требований
+
+Пользователи должны общаться в real-time.
+Сообщения должны сохраняться и быть доступны после перезахода.
+Возможность пересылать медиа (фото, видео).
+Масштабируемость: миллионы пользователей онлайн.
+Фронту нужны быстрые ответы (low latency).
+
+2. С точки зрения фронта
+
+Основной канал общения: WebSocket (двусторонняя связь).
+Фоллбэк — SSE/Long Polling (если WebSocket не поддерживается).
+Для загрузки файлов — напрямую в CDN/S3, чтобы не перегружать backend.
+
+3. API дизайн
+
+REST / GraphQL API для:
+
+Авторизации
+Получения истории сообщений
+Управления чатом (создать, добавить участников)
+Real-time события (новые сообщения, read receipts) — через WebSocket.
+
+4. Backend (объясняю общими словами, без глубокой devops-магии)
+
+База данных:
+
+Сообщения храним в SQL (Postgres) — нужны транзакции и упорядоченность.
+Для поиска по истории — Elasticsearch.
+
+Кэш:
+
+Redis — хранить последние N сообщений для быстрого доступа, плюс хранение активных сессий.
+
+Очередь:
+
+Kafka — для доставки сообщений оффлайн-пользователям и логирования.
+
+Файлы:
+
+Object Storage (S3) + CDN — фронт получает прямую ссылку, а не качает через API.
+
+5. Масштабирование
+
+Load Balancer — чтобы трафик шёл на разные сервера.
+WebSocket-шардинг (например, по userId) — чтобы миллионы пользователей могли держать соединение.
+Репликация БД — читаем из реплик, пишем в мастер.
+
+6. Trade-offs (важно для senior уровня!)
+
+SQL хорош для упорядоченности сообщений, но тяжело масштабировать → придётся шардинг.
+Redis даёт быстрый доступ, но данные не персистентные → всегда fallback в Postgres.
+WebSocket быстрый, но сложнее масштабировать, чем REST → нужен балансировщик.
+
+7. С точки зрения фронтенда (ключевой момент!)
+
+Пользователь получает smooth-UX:
+моментальная доставка сообщений (WebSocket)
+оффлайн-сообщения подтягиваются при ре-коннекте (через API + Kafka offset)
+загрузка картинок сразу в CDN → экономим секунды и трафик
+оптимизации: виртуализация списка сообщений (React/Vue), локальный кэш (IndexedDB/ServiceWorker).
+
+🎯 Как это звучит на собесе
+
+Ты не углубляешься в "как настроить кластеры Kafka", а показываешь, что понимаешь картину целиком и можешь аргументировать:
+какие требования →
+какие технологии →
+почему именно они →
+какие trade-offs.
+        `
+        }]
+      }]
+  }
 };
 
 export function getSubject(key: SubjectKey): Subject | null {

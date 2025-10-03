@@ -14,15 +14,17 @@ export default function SectionPage({ section }: SectionPageProps) {
     <main className="p-6">
       <title>{subject.title}</title>
       <article className="text-2xl font-semibold mb-4">{subject.title} Assistant</article>
-      <Accordion
-        items={subject.rules.map((r) => ({
-          id: r.id,
-          label: r.label,
-          description: r.description,
-          image: r.image,
-          code: r.code,
-        }))}
-      />
+      <div className="flex flex-col mx-auto md:w-2/3">
+        <Accordion
+          items={subject.rules.map((r) => ({
+            id: r.id,
+            label: r.label,
+            description: r.description,
+            image: r.image,
+            code: r.code,
+          }))}
+        />
+      </div>
     </main>
   );
 }

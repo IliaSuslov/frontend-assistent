@@ -20,7 +20,8 @@ export type SubjectKey =
   | "architecture"
   | "project_repository"
   | "testing"
-  | "database";
+  | "database"
+  | "system_design";
 
 export type SubjectRule = {
   id: string;
